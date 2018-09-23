@@ -45,3 +45,26 @@ Proof.
   left. split. apply even_Sn. auto. auto.
   right. split. apply odd_Sn. auto. auto.
 Qed.
+
+Require Import List.
+Import ListNotations.
+
+Lemma rev_l_a :
+  forall (A : Type) (a : A) (l : list A),
+    rev (l ++ [a]) = a :: rev l.
+Proof.
+  intros A a.
+  induction l; try auto.
+  simpl. rewrite IHl. auto.
+Qed.
+
+  
+Lemma rev_rev_l :
+  forall (A : Type) (l : list A),
+    rev (rev l) = l.
+Proof.
+  intros A.
+  induction l; try auto.
+  cbn. rewrite rev_l_a.
+  rewrite IHl. auto. Show Proof. 
+Qed.
