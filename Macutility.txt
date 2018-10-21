@@ -27,3 +27,11 @@ keep-learnings-MacBook-Pro:Assembly keep_learning$ nasm -f macho64 Tmp.asm
 keep-learnings-MacBook-Pro:Assembly keep_learning$ ld -macosx_version_min 10.7.0 -lSystem -o Tmp Tmp.o
 keep-learnings-MacBook-Pro:Assembly keep_learning$ ./Tmp 
 Hello World
+
+
+
+Mounting current directory in Ubuntu docker
+keep-learnings-MacBook-Pro:Assembly keep_learning$ docker run --rm -ti -v $(pwd):/Assembly ubuntu
+root@33efd006f5b0:/# ls
+Assembly  bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+root@33efd006f5b0:/# 
