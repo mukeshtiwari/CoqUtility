@@ -1,1 +1,29 @@
 > sudo spctl --master-disable  enable Anywhere in Security & Privacy
+
+
+Assembly Programming on Mac
+keep-learnings-MacBook-Pro:Assembly keep_learning$ nasm --version
+NASM version 2.13.03 compiled on Feb  8 2018
+keep-learnings-MacBook-Pro:Assembly keep_learning$ cat Tmp.asm 
+global start
+section .text
+
+start:
+    mov     rax, 0x2000004 ; write
+    mov     rdi, 1 ; stdout
+    mov     rsi, msg
+    mov     rdx, msg.len
+    syscall
+
+    mov     rax, 0x2000001 ; exit
+    mov     rdi, 0
+    syscall
+
+section .data
+
+msg:    db      "Hello World", 10
+.len:   equ     $ - msg
+keep-learnings-MacBook-Pro:Assembly keep_learning$ nasm -f macho64 Tmp.asm 
+keep-learnings-MacBook-Pro:Assembly keep_learning$ ld -macosx_version_min 10.7.0 -lSystem -o Tmp Tmp.o
+keep-learnings-MacBook-Pro:Assembly keep_learning$ ./Tmp 
+Hello World
