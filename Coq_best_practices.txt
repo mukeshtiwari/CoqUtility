@@ -1,2 +1,4 @@
 > Use cbn instead of simpl.
 > Use lia instead of omega. 
+> https://github.com/coq/coq/wiki/DependentInversion
+> https://github.com/coq/coq/wiki/MatchAsInReturn
