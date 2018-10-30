@@ -2,4 +2,4 @@
 > Use lia instead of omega. 
 > https://github.com/coq/coq/wiki/DependentInversion
 > https://github.com/coq/coq/wiki/MatchAsInReturn
->https://coq.inria.fr/refman/user-extensions/proof-schemes.html
+> https://coq.inria.fr/refman/user-extensions/proof-schemes.html
