@@ -260,3 +260,33 @@ Proof.
   pose proof (H1 _ l (sort l) H0).
   auto.
 Qed.
+
+Fixpoint take {A : Type} (n : nat) (l : list A) : list A :=
+  match n with
+  | O => []
+  | S n' => match l with
+           | [] => []
+           | h :: tl => h :: take n' tl
+           end
+  end.
+
+
+Fixpoint drop {A : Type} (n : nat) (l : list A) : list A :=
+  match n with
+  | O => l
+  | S n' => match l with
+           | [] => []
+           | h :: tl => drop n' tl
+           end
+  end.
+
+Lemma take_drop_identity :
+  forall (A : Type) (n : nat) (l : list A),
+    take n l ++ drop n l = l.
+Proof.
+  intros A n.
+  induction n; cbn; intros; try auto.
+  destruct l; cbn; try auto.
+  f_equal. apply IHn.
+Qed.
+
