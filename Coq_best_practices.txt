@@ -3,3 +3,7 @@
 > https://github.com/coq/coq/wiki/DependentInversion
 > https://github.com/coq/coq/wiki/MatchAsInReturn
 > https://coq.inria.fr/refman/user-extensions/proof-schemes.html
+> https://coq.inria.fr/refman/addendum/micromega.html?highlight=psatz
+> https://github.com/lukaszcz/coqhammer
+> https://github.com/samuelgruetter/counterexamples
+> https://nunchaku-inria.github.io/nunchaku/input_lang.html
