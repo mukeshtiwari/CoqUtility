@@ -58,3 +58,6 @@ So you can modify this default behaviour to print it into Intel assembly by addi
 
 keep-learnings-MacBook-Pro:~ keep_learning$ cat .lldbinit 
 settings set target.x86-disassembly-flavor intel
+
+Replace tabs with spaces 
+set tabstop=2 shiftwidth=2 expandtab
