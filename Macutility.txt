@@ -61,3 +61,4 @@ settings set target.x86-disassembly-flavor intel
 
 Replace tabs with spaces 
 set tabstop=2 shiftwidth=2 expandtab
+https://howchoo.com/g/m2u0nthkyti/vim-convert-tabs-to-spaces
