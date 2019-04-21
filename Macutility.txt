@@ -1,4 +1,4 @@
-> sudo spctl --master-disable  enable Anywhere in Security & Privacy
+> sudo spctl --master-disable  "enable anywhere in Security & Privacy"
 
 
 Assembly Programming on Mac
