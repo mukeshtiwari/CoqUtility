@@ -1,4 +1,4 @@
-> sudo spctl --master-disable  enable Anywhere in Security & Privacy
+> sudo spctl --master-disable  "enable anywhere in Security & Privacy"
 
 
 Assembly Programming on Mac
@@ -35,3 +35,30 @@ keep-learnings-MacBook-Pro:Assembly keep_learning$ docker run --rm -ti -v $(pwd)
 root@33efd006f5b0:/# ls
 Assembly  bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
 root@33efd006f5b0:/# 
+
+
+The default debugger of Mac is lldb. If you run this then by default it will print AT&T assembly code. 
+keep-learnings-MacBook-Pro:~ keep_learning$ lldb a.out 
+(lldb) target create "a.out"
+Current executable set to 'a.out' (x86_64).
+(lldb) b main
+Breakpoint 1: where = a.out`main, address = 0x0000000100000f70
+(lldb) r
+Process 818 launched: '/Users/keep_learning/a.out' (x86_64)
+Process 818 stopped
+* thread #1, queue = 'com.apple.main-thread', stop reason = breakpoint 1.1
+    frame #0: 0x0000000100000f70 a.out`main
+a.out`main:
+->  0x100000f70 <+0>:  pushq  %rbp
+    0x100000f71 <+1>:  movq   %rsp, %rbp
+    0x100000f74 <+4>:  movl   $0x0, -0x4(%rbp)
+    0x100000f7b <+11>: movl   $0x1, -0x8(%rbp)
+    
+So you can modify this default behaviour to print it into Intel assembly by adding 'settings set target.x86-disassembly-flavor intel' in the file name .lldbinit in your home directory.
+
+keep-learnings-MacBook-Pro:~ keep_learning$ cat .lldbinit 
+settings set target.x86-disassembly-flavor intel
+
+Replace tabs with spaces 
+set tabstop=2 shiftwidth=2 expandtab
+https://howchoo.com/g/m2u0nthkyti/vim-convert-tabs-to-spaces
