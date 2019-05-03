@@ -3,6 +3,7 @@ Require Import Psatz.
 Require Import Recdef.
 Require Import Coq.NArith.BinNat.
 Require Import Coq.Program.Wf.
+Require Import Coq.NArith.BinNat.
 
 Section Expo.
 
@@ -31,6 +32,8 @@ Section Expo.
   Definition fast_expo (a : Z) (n : nat) : Z :=
     fast_expo_acc a 1%Z n.
 
+
+  
 
   Lemma power_unit :
     forall m, power 1 m = 1%Z.
@@ -117,6 +120,73 @@ Section Expo.
     intros. rewrite fast_power_acc.
     lia.
   Qed.
+
   
-   
+  Fixpoint expo_recursive (m acc : Z) (p : positive) :=
+    match p with
+    | xH => Z.mul m acc
+    | xO w => expo_recursive (Z.mul m m) acc w
+    | xI w => expo_recursive (Z.mul m m) (Z.mul acc m) w
+    end.
+     
+     
+  Definition expo_acc (m acc : Z) (n : N) : Z :=
+    match n with
+    | N0 => acc 
+    | Npos p => expo_recursive m acc p
+    end.
+
+  Eval compute in expo_acc 2 1 10.
+
+  Lemma binexpo_equal_power :
+    forall a acc n , expo_acc a acc n = Z.mul acc (power a (nat_of_N n)).
+  Proof.
+    intros a acc n.
+    revert a acc.
+    destruct n.
+    + intros a acc.
+      cbn. lia.
+    + induction p.
+      ++  intros a acc. cbn in *.
+          assert (Hm : Z.mul a a = power a 2).
+          cbn. lia.
+          pose proof (IHp (Z.mul a a) (Z.mul acc a)).
+          rewrite H.
+          replace (acc * a * power (a * a) (Pos.to_nat p))%Z
+            with (acc * (a * power (a * a) (Pos.to_nat p)))%Z by lia.
+          f_equal. rewrite Pos2Nat.inj_xI.
+          cbn. f_equal.  rewrite Hm.
+          rewrite power_distribute.
+          replace ((Pos.to_nat p + (Pos.to_nat p + 0))) with
+              (2 * Pos.to_nat p) by lia.  auto.
+      ++ intros a acc. cbn in *.
+         assert (Hm : Z.mul a a = power a 2).
+         cbn. lia.
+         pose proof (IHp (Z.mul a a) acc).
+         rewrite H. f_equal.
+         rewrite Pos2Nat.inj_xO.
+         rewrite Hm. rewrite power_distribute.
+         auto.
+      ++ intros a acc. cbn in *.
+         rewrite Pos2Nat.inj_1. cbn.
+         lia.
+  Qed.
+
+  Definition expo (a : Z) (m : N) : Z :=
+    expo_acc a 1 m.
+    
+
+  (* Fairly fast. I can't believe Coq is so good at computing stuff. 
+     Kudos to Inria *)
+  Eval compute in expo 2 10000.
+
+  Lemma expo_is_equal_to_power :
+    forall a n, expo a n = power a (nat_of_N n).
+  Proof.
+    intros a n. unfold expo. 
+    pose proof (binexpo_equal_power a 1 n).
+    lia.
+  Qed.
+  
+  
 End Expo.
